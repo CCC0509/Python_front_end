@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # create server
 app = Flask(__name__)
@@ -6,7 +6,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return "This is home page"
+    # render the html file from templates folder
+    return render_template("index.html")
 
 
 # implement this app if it is not import from other file
