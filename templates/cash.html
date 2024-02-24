@@ -1,0 +1,40 @@
+{%extends "base.html"%} {%block title%}現金庫存表單{%endblock%}{%block content%}
+<form action="/cash" method="post">
+  <div class="mb-3">
+    <label for="taiwanese-dollars" class="form-label">臺幣</label>
+    <input
+      type="number"
+      class="form-control"
+      id="taiwanese-dollars"
+      placeholder="請輸入金額"
+      name="taiwanese-dollars"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="us-dollars" class="form-label">美金</label>
+    <input
+      type="number"
+      class="form-control"
+      id="us-dollars"
+      placeholder="請輸入金額"
+      name="us-dollars"
+      step="0.01"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="note" class="form-label">備註</label>
+    <input
+      type="text"
+      class="form-control"
+      id="note"
+      placeholder="請輸入備註"
+      name="note"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">日期</label>
+    <input type="date" class="form-control" id="date" name="date" />
+  </div>
+  <button class="btn btn-primary" type="submit">送出表單</button>
+</form>
+{%endblock%}

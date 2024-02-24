@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>個人理財頁面</title>
-  </head>
-  <body>
-    <h1>個人理財頁面</h1>
-  </body>
-</html>
+<!-- inherit template from "base.html" -->
+{%extends "base.html"%} {%block title%}個人理財頁面{{super()}}{%endblock%}
+{%block content%}
+<h1>現金庫存</h1>
+<table class="table table-bordered">
+  <td>臺幣總額：元</td>
+  <td>美金總額：元</td>
+  <td>今日匯率：</td>
+  <td>現金總額：元</td>
+</table>
+{%endblock%}

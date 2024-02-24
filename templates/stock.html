@@ -1,0 +1,60 @@
+{%extends "base.html"%} {%block title%}股票庫存表單{%endblock%}{%block content%}
+<form action="/stock" method="post">
+  <div class="mb-3">
+    <label for="stock-id" class="form-label">股票代號</label>
+    <input
+      type="text"
+      class="form-control"
+      id="stock-id"
+      placeholder="請輸入代號"
+      name="stock-id"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="stock-num" class="form-label">成交股數</label>
+    <input
+      type="number"
+      class="form-control"
+      id="stock-num"
+      placeholder="請輸入股數"
+      name="stock-num"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="stock-price" class="form-label">成交單價</label>
+    <input
+      type="number"
+      class="form-control"
+      id="stock-price"
+      placeholder="請輸入金額"
+      name="stock-price"
+      step="0.01"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="processing-fee" class="form-label">手續費</label>
+    <input
+      type="number"
+      class="form-control"
+      id="processing-fee"
+      placeholder="請輸入金額"
+      name="processing-fee"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="tax" class="form-label">交易稅</label>
+    <input
+      type="number"
+      class="form-control"
+      id="tax"
+      placeholder="請輸入金額"
+      name="tax"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="date" class="form-label">日期</label>
+    <input type="date" class="form-control" id="date" name="date" />
+  </div>
+  <button class="btn btn-primary" type="submit">送出表單</button>
+</form>
+{%endblock%}
