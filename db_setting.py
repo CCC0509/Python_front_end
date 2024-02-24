@@ -1,9 +1,9 @@
 import sqlite3
 
-conn = sqlite3.connect("datafile.db")
+conn = sqlite3.connect("datafile.db")  # create database
 cursor = conn.cursor()
 
-# 建立資料庫內容
+# create table
 cursor.execute(
     """create table cash (transaction_id integer primary key, taiwanese_dollars integer, us_dollars real, note varchar(30), date_info date)""")
 
