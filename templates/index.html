@@ -1,34 +1,76 @@
 <!-- inherit template from "base.html" -->
 {%extends "base.html"%} {%block title%}個人理財頁面{{super()}}{%endblock%}
 {%block content%}
-<h1>現金庫存</h1>
-<table class="table table-bordered">
-  <td>臺幣總額：{{data_cash["twd"]}}元</td>
-  <td>美金總額：{{data_cash["usd"]}}元</td>
-  <td>今日匯率：{{data_cash["rate"]}}</td>
-  <td>現金總額：{{data_cash["total"]}}元</td>
-</table>
-<p>匯率來源：全球即時匯率API https://tw.rter.info/howto_currencyapi.php</p>
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">臺幣</th>
-      <th scope="col">美金</th>
-      <th scope="col">備註</th>
-      <th scope="col">時間</th>
-      <th scope="col">刪除資料</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for data in data_cash["result"]:%}
-    <td class="pt-3">{{data[0]}}</td>
-    <td class="pt-3">{{data[1]}}</td>
-    <td class="pt-3">{{data[2]}}</td>
-    <td class="pt-3">{{data[3]}}</td>
-    <td class="pt-3">{{data[4]}}</td>
-    <td><button type="submit" class="btn btn-danger">刪除</button></td>
-    {%endfor%}
-  </tbody>
-</table>
+<div class="cash-info">
+  <h2>現金庫存</h2>
+  <table class="table table-bordered">
+    <!-- get data from backend database -->
+    <td>臺幣總額：{{data_cash["twd"]}}元</td>
+    <td>美金總額：{{data_cash["usd"]}}元</td>
+    <td>今日匯率：{{data_cash["rate"]}}</td>
+    <td>現金總額：{{data_cash["total"]}}元</td>
+  </table>
+  <p>匯率來源：全球即時匯率API https://tw.rter.info/howto_currencyapi.php</p>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">臺幣</th>
+        <th scope="col">美金</th>
+        <th scope="col">備註</th>
+        <th scope="col">時間</th>
+        <th scope="col">刪除資料</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in data_cash["result"]:%}
+      <tr>
+        <td class="pt-3">{{data[0]}}</td>
+        <td class="pt-3">{{data[1]}}</td>
+        <td class="pt-3">{{data[2]}}</td>
+        <td class="pt-3">{{data[3]}}</td>
+        <td class="pt-3">{{data[4]}}</td>
+        <td>
+          <form action="/delete_cash" method="post">
+            <input type="hidden" name="id" value="{{data[0]}}" />
+            <button type="submit" class="btn btn-danger">刪除</button>
+          </form>
+        </td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+<hr />
+<div class="stock-info">
+  <h2>股票庫存</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">股票代號</th>
+        <th scope="col">持有股數</th>
+        <th scope="col">目前股價</th>
+        <th scope="col">目前市值</th>
+        <th scope="col">股票資產占比(%)</th>
+        <th scope="col">購買總成本(包含手續費)</th>
+        <th scope="col">平均成本</th>
+        <th scope="col">報酬率(%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for stock in stock_info%}
+      <tr>
+        <th>{{stock["stock_id"]}}</th>
+        <th>{{stock["num"]}}</th>
+        <th>{{stock["price"]}}</th>
+        <th>{{stock["total_price"]}}</th>
+        <th>{{stock["value_percentage"]}}</th>
+        <th>{{stock["cost"]}}</th>
+        <th>{{stock["average_cost"]}}</th>
+        <th>{{stock["roi"]}}</th>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
 {%endblock%}
