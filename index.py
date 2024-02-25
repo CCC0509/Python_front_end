@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, g, redirect
 import sqlite3
 import requests
 import math
+import os
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("agg")
 
 # create server
 app = Flask(__name__)
@@ -51,9 +55,6 @@ def home():
         twd += data[1]
         usd += data[2]
     cash_total = math.floor(twd+usd*exchange_rate)
-    # save data as a object
-    data_cash = {"twd": twd, "usd": usd, "rate": exchange_rate,
-                 "total": cash_total, "result": result_cash}
     # data from stock table
     result_stock = cursor.execute("select * from stock").fetchall()
     # list all stock_id which is no duplicate
@@ -88,9 +89,34 @@ def home():
     for stock in stock_info:
         stock["value_percentage"] = round(
             (stock["total_price"]/stock_price)*100, 2)
+    # stock pie charts
+    if len(stock_list) != 0:
+        labels = tuple(stock_list)
+        sizes = [stock["value_percentage"] for stock in stock_info]
+        fig, ax = plt.subplots(figsize=(6, 5))
+        ax.pie(sizes, labels=labels, autopct=None, shadow=None)
+        fig.subplots_adjust(top=1, bottom=0, right=1,
+                            left=0, hspace=0, wspace=0)
+        plt.savefig("./static/stock.jpg", dpi=200)
+
+    # total pie charts
+    if twd != 0 or usd != 0 or stock_price != 0:
+        labels = ("TWD", "USD", "STOCK")
+        sizes = [twd, usd*exchange_rate, stock_price]
+        fig, ax = plt.subplots(figsize=(6, 5))
+        ax.pie(sizes, labels=labels, autopct=None, shadow=None)
+        fig.subplots_adjust(top=1, bottom=0, right=1,
+                            left=0, hspace=0, wspace=0)
+        plt.savefig("./static/total.jpg", dpi=200)
+
+    print(os.path.exists("./static/stock.jpg"))
+
+    # save data as a object
+    data = {"stock_pie": os.path.exists("./static/stock.jpg"), "total_pie": os.path.exists("./static/total.jpg"), "twd": twd, "usd": usd, "rate": exchange_rate,
+            "total": cash_total, "result": result_cash, "stock": stock_info}
     # render the html file from templates folder
     # send data to html
-    return render_template("index.html", data_cash=data_cash, stock_info=stock_info)
+    return render_template("index.html", data=data)
 
 
 @app.route("/cash")

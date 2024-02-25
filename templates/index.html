@@ -5,10 +5,10 @@
   <h2>現金庫存</h2>
   <table class="table table-bordered">
     <!-- get data from backend database -->
-    <td>臺幣總額：{{data_cash["twd"]}}元</td>
-    <td>美金總額：{{data_cash["usd"]}}元</td>
-    <td>今日匯率：{{data_cash["rate"]}}</td>
-    <td>現金總額：{{data_cash["total"]}}元</td>
+    <td>臺幣總額：{{data["twd"]}}元</td>
+    <td>美金總額：{{data["usd"]}}元</td>
+    <td>今日匯率：{{data["rate"]}}</td>
+    <td>現金總額：{{data["total"]}}元</td>
   </table>
   <p>匯率來源：全球即時匯率API https://tw.rter.info/howto_currencyapi.php</p>
   <table class="table table-bordered">
@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for data in data_cash["result"]:%}
+      {% for data in data["result"]:%}
       <tr>
         <td class="pt-3">{{data[0]}}</td>
         <td class="pt-3">{{data[1]}}</td>
@@ -58,7 +58,7 @@
       </tr>
     </thead>
     <tbody>
-      {%for stock in stock_info%}
+      {%for stock in data["stock"]%}
       <tr>
         <th>{{stock["stock_id"]}}</th>
         <th>{{stock["num"]}}</th>
@@ -72,5 +72,28 @@
       {%endfor%}
     </tbody>
   </table>
+</div>
+<div id="chart" class="d-flex justify-content-around">
+  {%if data["stock_pie"]%}
+  <figure>
+    <figcaption>股票庫存占比圖</figcaption>
+    <img
+      src="/static/stock.jpg"
+      alt="股票庫存占比圖"
+      width="420px"
+      height="350px"
+    />
+  </figure>
+  {%endif%} {%if data["total_pie"]%}
+  <figure>
+    <figcaption>庫存占比圖</figcaption>
+    <img
+      src="/static/total.jpg"
+      alt="庫存占比圖"
+      width="420px"
+      height="350px"
+    />
+  </figure>
+  {%endif%}
 </div>
 {%endblock%}
