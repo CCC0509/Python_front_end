@@ -108,8 +108,12 @@ def home():
         fig.subplots_adjust(top=1, bottom=0, right=1,
                             left=0, hspace=0, wspace=0)
         plt.savefig("./static/total.jpg", dpi=200)
-
-    print(os.path.exists("./static/stock.jpg"))
+    else:
+        # check if there is no data left,and should remove the chart which is exist
+        try:
+            os.remove("./static/total.jpg")
+        except:
+            pass
 
     # save data as a object
     data = {"stock_pie": os.path.exists("./static/stock.jpg"), "total_pie": os.path.exists("./static/total.jpg"), "twd": twd, "usd": usd, "rate": exchange_rate,
